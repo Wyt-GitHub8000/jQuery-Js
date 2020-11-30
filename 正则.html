@@ -1,0 +1,54 @@
+<!-- 需求分析：编写一个简单的用户注册界面，实现用户输入的正则表达式验证
+	1. 用户名由英文字母和数字组成的4-16位字符，以字母开头
+	2.密码由英文字母和数字组成的4-10位字符
+	3.确认密码的输入必须和密码栏输入的信息一致
+	4.合法的电子邮箱格式
+	5.手机号必须为11位的数字
+	-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div class="box">
+			用户名称：<input type="text" id="uName"/> <br>
+			用户密码：<input type="password" id="uPassword"/> <br>
+			确认密码：<input type="password" id="rPwd"/> <br>
+			电子邮箱：<input type="email" id="uEmail"/> <br>
+			用户手机：<input type="text" id="uPhone"/>
+		</div>
+	</body>
+	<script type="text/javascript">
+		window.onload = function(){
+			//获取节点
+			var name = document.getElementById('uName');
+			var pwd = document.getElementById('uPassword');
+			var email = document.getElementById('uEmail');
+			var phone = document.getElementById('uPhone');
+			//用户名称判断
+			name.addEventListener('blur',function(){
+				console.log('用户名验证');
+				var user = this.value;
+				var reg = /^[a-zA-Z][a-zA-Z0-9]{3,15}$/;
+				if(reg.test(user) == false){
+					console.log('用户名不正确');
+				}else{
+					console.log('正确');
+				}
+			})
+			//邮箱验证
+			email.addEventListener('blur',function(){
+				console.log('邮箱验证');
+				var mail = this.value;
+				var reg = /^\w+@\w+(\.[a-zA-Z]{2,3}){1,2}$/; 
+				if(reg.test(mail) == false){
+					console.log('邮箱不通过')
+				}else{
+					console.log('邮箱通过')
+				}
+			})
+		}
+	</script>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.box{
+				width: 440px;
+				height: 298px;
+				border: 1px solid #000;
+				margin: 50px auto;
+			}
+			.nav>li{
+				list-style: none;
+				width: 110px;
+				height: 50px;
+				background-color: orange;
+				text-align: center;
+				line-height: 50px;
+				float: left;
+			}
+			.nav .current{
+				background-color: #ccc;
+			}
+			.content>li{
+				list-style: none;
+				display: none;
+			}
+			.content>li>img{
+				width: 440px;
+				height: 248px;
+			}
+			.content .show{
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<ul class="nav">
+				<li class="current">十面埋伏</li>
+				<li>流浪地球</li>
+				<li>白夜行</li>
+				<li>库里</li>
+			</ul>
+			<ul class="content">
+				<li class="show"><img src="img/smmf.jpg" ></li>
+				<li><img src="img/lldq.jpg" ></li>
+				<li><img src="img/byx.jpg" ></li>
+				<li><img src="img/curry.jpg" ></li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			$('.nav>li').mouseenter(function(){
+				//谁触发了this就是谁,底层让我们无需像原生js一样得时刻注意this指向
+				$(this).addClass('current');
+				// 根据当前选项卡的索引找到对应图片,通过eq筛选方法,该方法将获取的节点重新包装成jQuery对象返回.但是get方法不会包装,直接是返回节点结构
+				$('.content>li').eq($(this).index()).addClass('show');
+			}).mouseleave(function(){
+				$(this).removeClass('current');
+				$('.content>li').eq($(this).index()).removeClass('show');
+			})
+		})
+		// 上述方法过于复杂,且存在Bug.更为简便的一种方式是使用siblings()排他方法。
+		// 下面有用原生的js的实现的代码,比较一下,体验一下jQuery强大的Dom操作.
+	</script>
+</html>

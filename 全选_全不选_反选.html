@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			button{
+				margin-top: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="checkbox"/>尼古拉·赵四 <br>
+		<input type="checkbox" />莱昂纳多·刘能 <br>
+		<input type="checkbox" />史蒂芬·库里 <br>
+		<input type="checkbox" />勒布朗·詹姆斯 <br>
+		<button onclick="select(0);">全选</button>    <!-- 注意原生js在标签内部添加事件的写法(标签内的写法，js内事件处理函数的写法) -->
+		<button onclick="select(1);">全不选</button>
+		<button onclick="select(2);">反选</button>
+	</body>
+	<script type="text/javascript">
+		/* 逻辑分析:解决这一需求的关键是明白checkbook的三种选中状态,
+			用户点击时可以选中;为标签添加checked属性时可以选中;通过js可以选中 */
+			window.onload = function(){
+				var buttons = document.getElementsByTagName('button');
+				var inputs = document.getElementsByTagName('input');
+// 				利用函数化编程对代码进行优化
+// 				buttons[0].onclick = function(){
+// 					for(let i=0;i<inputs.length;i++){
+// 						inputs[i].checked = true;
+// 					}
+// 				}
+// 				buttons[1].onclick = function(){
+// 					for(let i=0;i<inputs.length;i++){
+// 						inputs[i].checked = false;
+// 					}
+// 				}
+// 				buttons[2].onclick = function(){
+// 					for(let i=0;i<inputs.length;i++){
+// 						inputs[i].checked = !inputs[i].checked;
+// 					}
+// 				}
+
+				//事件处理函数是匿名函数,不可以直接写buttons[0].onclick=select(0),sleect为有名函数.
+// 				buttons[0].onclick =function(){
+// 					select(0);
+// 				};
+// 				buttons[1].onclick =function(){
+// 					select(1);
+// 				};
+// 				buttons[2].onclick =function(){
+// 					select(2);
+// 				};
+	            select = function(index){
+					for(let i=0;i<inputs.length;i++){
+							if(index == 0){
+								inputs[i].checked = true;
+							}else if(index == 1){
+								inputs[i].checked = false;
+							}else{
+								inputs[i].checked = !inputs[i].checked;
+							}
+							
+						}
+					}
+// 				function select(index){
+// 					for(let i=0;i<inputs.length;i++){
+// 						if(index == 0){
+// 							inputs[i].checked = true;
+// 						}else if(index == 1){
+// 							inputs[i].checked = false;
+// 						}else{
+// 							inputs[i].checked = !inputs[i].checked;
+// 						}
+// 						
+// 					}
+// 				}
+			}
+	</script>
+</html>

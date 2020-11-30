@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#tab{
+				width: 394px;
+				height: 30px;
+				margin-left: 20px;
+				list-style: none;
+			}
+			#tab>li{
+				float: left;
+				width: 78px;
+				height: 30px;
+				text-align: center;
+				line-height: 30px;
+				background-color: rgba(39,171,176,.5);
+				border-right: 1px solid #000;
+			}
+			#tab>li:last-child{
+				border: none;
+			}
+			#content{
+				margin-left: 20px;
+				list-style: none;
+			}
+			#content>li{
+				display: none;
+			}
+			#content>li>img{
+				width: 394px;
+				height: 150px;
+			}
+			#tab>.current{
+				color: #fff;
+				background-color: rgba(255,123,0,.5);
+			}
+			#tab>.current:hover{
+				cursor: pointer;
+			}
+			#content>.active{
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<ul id="tab">
+				<li class="current">游戏1</li>
+				<li>游戏2</li>
+				<li>游戏3</li>
+				<li>游戏4</li>
+				<li>游戏5</li>
+			</ul>
+			<ul id="content">
+				<li class="active"><img src="img/slide/1.jpg" ></li>
+				<li><img src="img/slide/2.jpg" ></li>
+				<li><img src="img/slide/3.jpg" ></li>
+				<li><img src="img/slide/4.jpg" ></li>
+				<li><img src="img/slide/5.jpg" ></li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		/* tab的实现方式:
+			1.可以简化相应的html代码,id为content的内容可以省略,加一个img标签仅仅显示一张图片,然后通过更改img中src属性实现图片的切换
+			2.更为常规的一种方式,我们通过jQuery实现的就是用的这种方式。通过类名切换图片
+			3.这一方式是我参考轮播图制作的一种思想，通过定位来实现  */
+			var tLis = document.querySelectorAll('#tab>li');
+			var pics = document.querySelectorAll('#content>li');
+			for(var i=0;i<tLis.length;i++){
+				tLis[i].index = i;
+				tLis[i].onmouseenter = function(){
+					this.className = 'current';
+					clearClass(tLis,this.index);
+					
+					pics[this.index].className = 'active';
+					clearClass(pics,this.index);
+				}
+			}
+			function clearClass(obj,index){
+				for(let j=0;j<tLis.length;j++){
+					if(j != index){
+						obj[j].className = '';
+					}
+				}
+			}
+	</script>
+</html>
+<!-- 此时，你就会发现使用原生js实现好复杂呀！其实开发中并不是要你用原生js实现，js是所有前端框架的基础，有助于我们理解框架实现的原理，
+对于解决框架使用过程中的遇到的难点大有益处。 -->

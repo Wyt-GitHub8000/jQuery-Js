@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<ul>
+				<li v-for="(item,index) in testData1">
+					<span>{{item}}</span>
+					<div>
+						<span>{{testData2[index].one}}</span>
+						<span>{{testData2[index].two}}</span>
+						<span>{{testData2[index].three}}</span>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		new Vue({
+			el:'#app',
+			data:{
+				testData1:['库里', '詹姆斯', '杜兰特'],
+				testData2:[{one:3465, two:3256, three:3230},{one:4598, two:4256, three:4230},{one:5465, two:6256, three:7230}]
+			}
+		})
+	</script>
+</html>

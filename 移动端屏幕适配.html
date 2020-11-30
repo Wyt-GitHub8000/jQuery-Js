@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			.header{
+				width: 100vw;
+				height: 100px;
+				background-color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header"></div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		// 改变时看不出效果可能是我在使用Vue时安装了用于适配的插件
+		window.onload = function(){
+			var ratio = 18.75;
+			var viewWidth = document.documentElement.getBoundingClientRect().width || window.innerWidth;
+			console.log(viewWidth);
+			document.documentElement.style.fontSize = viewWidth/ratio+'px';
+		}
+	</script>
+	
+</html>

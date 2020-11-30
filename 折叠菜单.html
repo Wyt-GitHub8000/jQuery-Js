@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>折叠菜单，jQuery动画之折叠与展开</title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.nav{
+				list-style: none;
+				width: 300px;
+				margin: 100px auto;
+			}
+			.nav>li{
+				border: 1px solid #000;
+				line-height: 35px;
+				border-bottom: none;
+				padding-left: 15px;
+				position: relative;
+			}
+			.nav>li:last-child{
+				border-bottom: 1px solid #000;
+				border-bottom-left-radius: 10px;
+				border-bottom-right-radius: 10px;
+			}
+			.nav>li:first-child{
+				border-top-left-radius: 10px;
+				border-top-right-radius: 10px;
+			}
+			.nav>li>span{
+				position: absolute;
+				right: 15px;
+			}
+			.nav .sub>li{
+				list-style: none;
+				background-color: purple;
+				border: 1px solid white;
+				padding-left: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<ul class="nav">
+			<li>一级菜单<span>></span>
+				<ul class="sub">
+					<li>二级菜单</li>
+					<li>二级菜单</li>
+					<li>二级菜单</li>
+					<li>二级菜单</li>
+					<li>二级菜单</li>
+				</ul>
+			</li>
+			<li>一级菜单<span>></span></li>
+			<li>一级菜单<span>></span></li>
+			<li>一级菜单<span>></span></li>
+			<li>一级菜单<span>></span></li>
+			<li>一级菜单<span>></span></li>
+			<li>一级菜单<span>></span></li>
+			<li>一级菜单<span>></span></li>
+		</ul>
+	</body>
+</html>

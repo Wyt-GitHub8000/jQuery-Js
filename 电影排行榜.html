@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.box{
+				width: 300px;
+				height: 450px;
+				margin: 50px auto;
+				border: 1px solid black;
+			}
+			.box > h1{
+				font-size: 20px;
+				line-height: 35px;
+				color: deeppink;
+				padding-left: 10px;
+			}
+			ul>li{
+				list-style: none;
+				padding: 5px 10px;
+				border: 1px dashed #ccc;
+			}
+			ul>li:nth-child(-n+3) span{
+				background-color: deeppink;
+			}
+			ul>li>span{
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+				background-color: #ccc;
+				display: inline-block;
+				text-align: center;
+				line-height: 20px;
+				margin-right: 10px;
+			}
+			.content{
+				overflow: hidden;
+				display: none;
+			}
+			.content>img{
+				width: 80px;
+				height: 120px;
+				float: left;
+				margin-top: 5px;
+			}
+			.content>p{
+				width: 180px;
+				height: 120px;
+				font-size: 12px;
+				line-height: 20px;
+				float: right;
+			}
+			.current .content{
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<h1>电影排行榜</h1>
+			<ul>
+				<li><span>1</span>十面埋伏
+					<div class="content">
+						<img src="img/smmf.jpg" >
+						<p>《十面埋伏》是北京新画面影业公司于2004年出品的一部武侠电影，由张艺谋执导，金城武、刘德华、章子怡领衔主演。
+							该片于2004年7月16日在中国内地上映。影片讲述的是晚唐时期两个捕快与一个歌妓的爱情故事。
+							原本歌妓喜欢的是刘捕头，但后来经过一番周折，歌妓发现自己最爱的竟是金捕头，刘捕头则因爱生恨，萌发了杀死歌妓的念头。
+							最后歌妓为了保住金捕头的性命，与刘捕头同归于尽。</p>
+					</div>
+				</li>
+				<li><span>2</span>流浪地球
+					<div class="content">
+						<img src="img/lldq.jpg" >
+						<p>《流浪地球》是由中国电影股份有限公司、北京京西文化旅游股份有限公司、北京登峰国际文化传播有限公司、郭帆文化传媒（北京）有限公司出品的科幻片，
+							由郭帆执导，吴京特别出演，屈楚萧、赵今麦、李光洁、吴孟达领衔主演。该片于2019年2月5日（农历大年初一）在中国内地上映。
+						   《流浪地球》根据刘慈欣同名小说改编，故事设定在2075年，讲述了太阳即将毁灭，已经不适合人类生存，而面对绝境，人类将开启“流浪地球”计划</p>
+					</div>
+				</li>
+				<li><span>3</span>白夜行
+					<div class="content">
+						<img src="./img/byx.jpg" >
+						<p>《白夜行》是日本作家东野圭吾创作的长篇小说，也是其代表作。该小说于1997年1月至1999年1月间连载于期刊，单行本1999年8月在日本发行。
+							故事围绕着一对有着不同寻常情愫的小学生展开。
+							1973年，大阪的一栋废弃建筑内发现了一具男尸，此后19年，嫌疑人之女雪穗与被害者之子桐原亮司走上截然不同的人生道路，一个跻身上流社会，
+							一个却在底层游走，而他们身边的人，却接二连三地离奇死去，警察经过19年的艰苦追踪，终于使真相大白。</p>
+					</div>
+				</li>
+				<li><span>4</span>爱情公寓</li>
+				<li><span>5</span>星球大战</li>
+				<li><span>6</span>复仇者联盟</li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			//监听li移入事件。底层肯定有一个遍历过程,参照原生的js为数组中的每个元素添加事件
+			$('li').mouseenter(function(){
+				$(this).addClass('current');
+			}).mouseleave(function(){
+				$(this).removeClass('current');
+			})
+		})
+	</script>
+</html>

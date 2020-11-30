@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.code_show>.code{
+				display: inline-block;
+				width: 64px;
+				height: 25px;
+				background-color: lightblue;
+				font-size: 16px;
+				text-align: center;
+				line-height: 25px;
+			}
+			.code_show>a{
+				background-color: palevioletred;
+			}
+			.v-code>.input_code{
+				margin: 10px 0 15px 0; /* 未设置宽高,靠内容撑开,设置margin值无效 */
+			}
+			#text_show{
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="v_code">
+			<div class="code_show">
+				<span class="code" id="checkCode"></span>
+				<a id="linkbt">看不清换一张</a>
+			</div>
+			<div class="input_code">
+				<label for="inputCode">验证码：</label>
+				<input type="text" id="inputCode" />
+				<span id="text_show"></span>
+			</div>
+			<input type="button" id="Button1" value="确定">
+		</div>
+	</body>
+	<script type="text/javascript">
+		/* 业务逻辑:
+			1.点击看不清换一张,验证码更新
+			2.当用户点击确定时,对用户输入的验证码与生成的验证码进行比较,不正确提示 */
+			window.onload = function(){
+				//随机生成一个6位数的验证码思路：利用随机函数,产生一个随机数,
+				//创建一个数组,里面存放验证码各个位数可能的结果,将产生的随机数作为数组的索引值从数组中取值,就达到了随机产生一个数
+				//注意利用js函数化编程对代码进行优化
+				function getCode(){
+					var codes = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
+					var code = '';
+					for(let i =0;i<6;i++){
+						var temp = Math.round(Math.random()*15);
+						code+=codes[temp];
+					}
+					return code;
+				}
+				
+				var codeNode = document.getElementById('checkCode');
+				var textShow = document.getElementById('text_show');
+				var aNode = document.getElementById('linkbt');
+				var input = document.getElementById('inputCode');
+				var but = document.getElementById('Button1');
+				codeNode.innerText = getCode();
+				aNode.onclick = function(){
+					codeNode.innerText = getCode();
+				};
+				but.onclick = function(){
+					if(input.value != codeNode.innerText){
+						textShow.innerText = '验证码错误请重新输入';
+						input.value = '';
+						codeNode.innerText = getCode();
+					}else{
+						location.href = 'https://www.baidu.com';
+					}
+				};
+				input.onfocus = function(){
+					textShow.innerText = '';
+				}
+			}
+	</script>
+</html>
+<!-- 上述效果大致实现，其实网站上有许多精致的验证码插件库，
+可以制作出许多精美的验证码，不过大多底层都是这样实现的 -->

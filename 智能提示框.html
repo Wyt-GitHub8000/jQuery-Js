@@ -1,0 +1,59 @@
+<!-- 需求说明：仿照各大网站的搜索引擎，在用户搜索的同时，搜索框的下方弹出智能提示，可用于后续蓝犀互娱项目的搜索框中 -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#tip{
+				width: 300px;
+				display: none;
+			}
+			#input,#tip{
+				margin-left: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<input type="text" id="input" placeholder="关键字" />
+			<input type="button" id="serach" value="搜索" />
+			<div id="tip"></div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		    /* js逻辑分析:监听用户输入,匹配后台数据,
+			将符合的数据在下面的智能框中显示 */
+		window.onload = function(){
+			//不使用mock模拟后台数据了,直接将数据写死在数组了,匹配数组中的数据
+			var data = ["Web前端课程，只要998", "JavaScript高级程序语言设计", "1000元助你成为后端工程师", "秦时明月之诸子百家", "秦时明月之君临天下", "秦时明月之沧海横流", "秦时明月之夜尽天明", "秦时明月之亡秦必楚"];
+			var input = document.getElementById('input');
+			var show = document.getElementById('tip');
+			input.onkeyup = function(){
+				//控制智能提示区域的显示与隐藏
+				show.style.display = 'block';
+				let str = '';
+				data.forEach((item)=>{
+					let flag = item.indexOf(input.value);
+					if(flag != -1){
+						str+='<p>'+item+'</p>'
+					}
+				})
+				//当用户输入为空,或者没有匹配到给用户提示
+				if(!input.value || !str){
+					show.innerHTML = '<p>暂无匹配</p>'
+				}else{
+					show.innerHTML = str;
+				}
+			}
+			input.onblur = function(){
+				show.style.display = 'none';
+				input.value = '';
+			}
+		}
+	</script>
+</html>

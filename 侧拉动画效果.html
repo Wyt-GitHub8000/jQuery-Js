@@ -1,0 +1,82 @@
+<!-- 本来想参照taptap的实现一个，没想到它里面用的也是swiper.js第三方插件，
+好吧！后续知道其中原理了，可以自己尝试实现一下。 -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/jquery-1.8.3.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.container{
+				width: 100vw;
+				height: 194px;
+				overflow: hidden;
+			}
+			.swiper{
+				width: 1950px;
+				height: 194px;
+				padding-left: 25px;
+				list-style: none;
+				transition-duration: 0ms;
+				transform: translate3d(0px,0px,0px);
+			}
+			.swiper>li{
+				float: left;
+			}
+			.swiper>li>img{
+				width: 360px;
+				height: 194px;
+				margin-right: 25px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<ul class="swiper" id="sss">
+				<li><img src="img/slide/1.jpg" ></li>
+				<li><img src="img/slide/2.jpg" ></li>
+				<li><img src="img/slide/3.jpg" ></li>
+				<li><img src="img/slide/4.jpg" ></li>
+				<li><img src="img/slide/5.jpg" ></li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		window.onload = function(){
+			/* 测试代码,说明可以通过transform的3d变化实现轮播
+			var i = 0;
+			var timer = setInterval(function(){
+				$('.swiper').css("transform","translate3d("+i+"px"+",0px"+",0px)")
+				i-=100;
+			},1000) */
+			// 通过移动端事件实现滑动改变图片的轮播
+			var startTx,endTx;
+			document.getElementById('sss').addEventListener("touchstart",function(ev){
+				var touches = ev.touches[0];
+				startTx = touches.clientX;
+			},false);
+			
+			document.getElementById('sss').addEventListener("touchmove",function(ev){
+				
+				var touches = ev.touches[0]; 
+				endTx = touches.clientX;
+			},false);
+			document.getElementById('sss').addEventListener("touchend",function(){
+				var distance = endTx-startTx;
+				console.log(distance);
+				//distance为负数表示向左滑
+				if(distance < 0){
+					$('.swiper').css("transform","translate3d("+distance+"px"+",0px"+",0px)")
+				};
+				//distance为正数表示向右滑
+				if(distance > 0){
+					$('.swiper').css("transform","translate3d("+distance+"px"+",0px"+",0px)")
+				}
+			},false)
+		}
+	</script>
+</html>

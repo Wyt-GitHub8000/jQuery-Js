@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.swiper-container{
+				width: 300px;
+				height: 100px;
+				margin: 100px auto;
+				position: relative;
+			}
+			.swiper-container>.swiper{
+				list-style: none;
+			}
+			.swiper>.item{
+				width: 300px;
+				height: 100px;
+				text-align: center;
+				font-size: 20px;
+				line-height: 100px;
+				position: absolute;
+			}
+			.swiper>li:nth-child(1){
+				background-color: red;
+			}
+			.swiper>li:nth-child(2){
+				background-color: goldenrod;
+			}
+			.swiper>li:nth-child(3){
+				background-color: gray;
+			}
+			.swiper>li:nth-child(4){
+				background-color: blue;
+			}
+			.current{
+				z-index: 999;
+			}
+			.btn{
+				position: absolute;
+				z-index: 1000;
+				width: 20px;
+				height: 40px;
+				border: none;
+				color: #fff;
+				background-color: rgba(0,0,0,.2);
+				right: 0;
+				top: 28px;
+			}
+			.btn:focus{
+				outline:none;
+				background-color: rgba(0,0,0,.4);
+			}
+			#goPre{
+				left: 0;
+			}
+			.point{
+				position: absolute;
+				left: 127px;
+				bottom: 6px;
+				list-style: none;
+				z-index: 1000;
+			}
+			.point .p{
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				float: left;
+				background-color: rgba(0,0,0,.4);
+				margin-right: 3px;
+			}
+			 .point .active{
+				background-color: rgba(255,255,255,.8);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="swiper-container">
+			<ul class="swiper">
+				<li class="item current">slider1</li>
+				<li class="item">slider2</li>
+				<li class="item">slider3</li>
+				<li class="item">slider4</li>
+			</ul>
+			<ul class="point">
+				<li class="active p" data-index='0'></li>  <!-- 通过自定义属性的方式实现指示点与图片的一一对应 -->
+				<li class="p" data-index='1'></li>
+				<li class="p" data-index='2'></li>
+				<li class="p" data-index='3'></li>
+			</ul>
+			<button class="btn" id="goPre"><</button>
+			<button class="btn" id="goNex">></button>
+		</div>
+	</body>
+	<script type="text/javascript">
+		window.onload = function(){
+			var items = document.getElementsByClassName('item');//轮播图
+			var points= document.getElementsByClassName('p');//指示器
+			var goPreNode = document.getElementById('goPre');//注意与下方的命名冲突问题
+			var goNexNode = document.getElementById('goNex');
+			var index = 0; //控制显示哪张图片
+			var timer;//定时器
+			startTimer();
+			//控制图片的切换
+			goPreNode.addEventListener('click',function(){
+				goPre();
+			});
+			goNexNode.addEventListener('click',function(){
+				goNex();
+			});
+			//通过指示器控制图片的切换
+			for(var i=0;i<points.length;i++){
+				points[i].addEventListener('click',function(){
+					var pointindex = this.dataset.index;//Html可以通过自定义属性的方式为js传值
+					index = pointindex;
+					goIndex();
+				})
+			}
+			//图片的自动切换
+			goPreNode.addEventListener('mouseenter',function(){
+				clearInterval(timer);
+			});
+			goPreNode.addEventListener('mouseleave',function(){
+				startTimer();
+			});
+			goNexNode.addEventListener('mouseenter',function(){
+				clearInterval(timer);
+			});
+			goNexNode.addEventListener('mouseleave',function(){
+				startTimer();
+			});
+			
+			
+			function goIndex(){
+				cleanCurrent();
+				items[index].className = 'item current';
+				points[index].className = 'p active';
+			};
+			function cleanCurrent(){
+				for(var i=0;i<items.length;i++){
+					items[i].className = 'item';
+					points[i].className = 'p'
+				}
+			};
+			function goPre(){
+				if(index<=0){
+					index = 3;
+				}else{
+					index--;
+				}
+				goIndex();
+			};
+			function goNex(){
+				index++;
+				index = index%4;
+				goIndex();
+			};
+			function startTimer(){
+				timer = setInterval(function(){
+					index++;
+					index = index%4;
+					goIndex();
+				},1000)
+			}
+		}
+	</script>
+</html>
+
+<!-- 该程序充分体现了函数化编程 -->
