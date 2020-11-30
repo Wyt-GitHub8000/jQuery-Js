@@ -1,0 +1,74 @@
+<!-- 需求：实现类似淘宝的商品图片点击切换效果
+难点：小图与大图的对应
+思路：
+  1.使用轮播图的思想，两个ul，通过一个索引值index实现一一对应
+  2.仅仅指示器使用ul,通过图片路径更改实现图片的一一对应（本项目使用该种方式） -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			.box{
+				width: 200px;
+				height: 406px;
+				border: 1px solid #000;
+				margin: 50px auto;
+			}
+			#pic{
+				width: 200px;
+				height: 321px;
+				display: block;
+				margin-bottom: 4px;
+			}
+			.indicator{
+				list-style: none;
+			}
+			.indicator>li{
+				float: left;
+				margin-left: 15px;
+			}
+			.indicator>li>img{
+				width: 47px;
+				height: 75px;
+				display: block;
+			}
+			.active{
+				border: 1px solid rgb(255,0,0);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<img src="img/switch/big0.jpg" id="pic">
+			<ul class="indicator">
+				<li class="active"><img src="img/switch/small1.jpg" ></li>
+				<li><img src="img/switch/small2.jpg" ></li>
+				<li><img src="img/switch/small3.jpg" ></li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		window.onload = function(){
+			var liNodes = document.getElementsByTagName('li');
+			var pic = document.getElementById('pic');
+			for(var i=0;i<liNodes.length;i++){
+				liNodes[i].index = i;
+				liNodes[i].onclick = function(){
+					clearStyle();
+					this.className = 'active';
+					pic.src = 'img/switch/big'+this.index+'.jpg';
+				}
+			}
+			function clearStyle(){
+				for(var j=0;j<liNodes.length;j++){
+					liNodes[j].className = '';
+				}
+			}
+		}
+	</script>
+</html>
