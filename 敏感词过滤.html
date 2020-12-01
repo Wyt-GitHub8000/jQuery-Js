@@ -1,0 +1,26 @@
+<!-- 需求：类似于论坛中的敏感词过滤效果
+           主要利用了字符串的replace方法-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<p><textarea rows="10" cols="30" id="text"></textarea></p>   <!-- 模拟文本输入区 -->
+		<p><input type="submit" id="sub" value="发布" /></p>         <!-- 用户点击发布时对文本区的内容做敏感词检测 -->
+		<p id="res"></p>                                             <!-- 将检测到的敏感词用相应的字符替换然后显示 -->
+	</body>
+	<script type="text/javascript">
+		window.onload = function(){
+			var text = document.getElementById('text');
+			var sub = document.getElementById('sub');
+			var result = document.getElementById('res');
+			var reg = /金三胖|妈的|操/g
+			sub.onclick = function(){
+				let newStr = text.value.replace(reg,'*');
+				result.innerText = newStr;
+			}
+		}
+	</script>
+</html>

@@ -1,0 +1,74 @@
+<!-- 需求：实现一个类似与安装的进度条效果
+思路：两个div，一个在另一个上方，安装过程中最上方的div宽度逐渐递增 -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.box{
+				width: 300px;
+				height: 200px;
+				margin: 50px auto;
+				position: relative;
+			}
+			.box>div:nth-child(1){
+				width: 200px;
+				height: 20px;
+				border: 1px solid #000;
+			}
+			#progress{
+				height: 20px;
+				background: rgba(255,0,0,.8);
+				width: 0;
+				position: absolute;
+				left: 1px;
+				top: 1px;
+			}
+			.box>div:nth-child(3){
+				position: absolute;
+				left: 85px;
+				top: 1px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div></div>
+			<div id="progress"></div>
+			<div>
+				<span>0</span>
+				<span>%</span>
+			</div>
+			<button type="button" id="btn">安装</button>
+		</div>
+	</body>
+	<!-- 书写Js代码时的注意事项，第一点定时器延时时间的设定，根据帧动画的原理通常间隔时间设置为150ms，动画流畅。
+	第二点当用户点击时重复创建定时器的bug问题 -->
+	<script type="text/javascript">
+		window.onload = function(){
+			let progress = document.getElementById('progress');
+			let btn = document.getElementById('btn');
+			let timer = null;
+			let bfb = 0;
+			btn.onclick = function(){
+				let num = 0;
+				if(timer == null){
+					timer = setInterval(function(){
+						num+=10;
+						bfb = num/200*100;
+						progress.style.width = num+'px'; 
+						document.getElementsByTagName('span')[0].innerText = Math.ceil(bfb);
+						if(num == 200){ //progress.style.width是px单位不能与200比较
+							clearInterval(timer);
+						}
+					},150)
+				}
+			}
+		}
+	</script>
+</html>
