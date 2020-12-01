@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div>
+			<h3>ES6中的特性比较多，在这里列举几个常用的：</h3>
+			<ul>
+				<li>类</li>
+				<li>模块化(Vue中有用到import/export)</li>
+				<li>箭头函数(主要解决回调函数中this的指向问题)</li>
+				<li>函数参数默认值</li>
+				<li>模板字符串</li>
+				<li>解构赋值</li>
+				<li>延展操作符</li>
+				<li>对象属性简写(对象的增强写法)</li>
+				<li>Promise(常用在异步化操作中)</li>
+				<li>Let与Const</li>
+			</ul>	
+		</div>
+	</body>
+	<script type="text/javascript">
+		window.onload = function(){
+			/* 1.函数的默认参数写法 */
+				// ES5实现函数默认参数
+				function e5defaultParams(name){
+					name = name || '张三';
+					console.log(name);
+				}
+				e5defaultParams();
+				// ES6实现函数默认参数
+				function e6defaultParams(name='张三'){
+					console.log(name);
+				}
+				e6defaultParams();
+				
+			/* 2.字符串模板(模板字面量)
+				js中单双引号字符串，均不解析变量，需要使用+号将变量拼接在字符串中。 
+				ES6中提供了字符串模板语法，允许使用反引号（倒引号） `` 来创建字符串，里面可以包含${变量名}形式的变量占位符。其中的变量会被解析。 */
+				//ES5在字符串中拼接变量
+				var num1=10;
+				console.log('我们有'+num1+'个人');
+				//ES6在字符串中拼接变量
+				let num2=10;
+				console.log(`我们有${num2}个人`); //可以更改我们之前的图片切换项目中图片替换时遇到的问题
+				
+			/* 3.展开运算符（拆包）
+				 ES6新增了展开运算符（用三个连续的点 (...) 表示），能够将数组和字符串字面量展开为多个元素 
+				 应用：拓展参数  它允许传递数组或者类数组直接做为函数的参数。
+					  不定参数(可变参数/剩余参数)*/
+				let array = [1,2,3]
+				console.log(array);
+				console.log(...array);
+				
+			/* 4.解构赋值   常用在数组/对象赋值的时候	 */
+				//定义三个变量,为其赋值
+				let [a,b,c]=[3,8,1];
+				console.log(a);
+				console.log(b);
+				console.log(c);
+				//通过解构赋值可以方便的交换两个变量的值。
+				let i,j;
+				i=1;
+				j=2;
+				console.log(`交换前:i=${i}  j=${j}`);
+				[i,j]=[j,i];
+				console.log(`解构操作后:i=${i}  j=${j}`);
+				
+			/* 5.Promise 是异步编程的一种解决方案，比传统的解决方案callback更加的优雅。
+			它最早由社区提出和实现的，ES6 将其写进了语言标准，统一了用法，原生提供了Promise对象。 */
+				//ES5中嵌套两个异步代码(使用setTimeOut()模拟异步代码)
+				setTimeout(function(){
+					console.log('Hello');
+					setTimeout(function(){
+						console.log('world')
+					},5000)
+				},150)
+				//ES6使用Promise实现
+				new Promise((resolve,reject)=>{
+					setTimeout(function(){
+						console.log('第一次异步请求')
+						resolve();//必须加该句告诉浏览器这次网络请求成功,执行成功的处理then()
+					},150)
+				}).then(()=>{
+					console.log('Hello');
+					return new Promise((resolve,reject)=>{
+						setTimeout(function(){
+							console.log('第二次异步请求')
+							resolve();
+						},5000)
+					}).then(()=>{
+						console.log('world')
+				})
+			})
+		}
+	</script>
+</html>
