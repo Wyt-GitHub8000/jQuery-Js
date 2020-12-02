@@ -1,0 +1,178 @@
+<!-- 需求分析：点击数量加减按钮数量随之增加，小计增加，对应的总价增加。
+		  点击删除时，当前一行的商品，同时总价也做出相应改变 -->
+<!-- 实现步骤：静态页面搭建，Css样式添加，Js动态交互效果 -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			table{
+				border-collapse: collapse;
+			}
+			th{
+				background-color: rgba(255,0,0,.5);
+			}
+			th,td{
+				width: 120px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<table border="1" cellspacing="0">
+				<tbody>
+					<!-- tr表示行，下面是表格的第一行，有5列，th主要放列的名字 -->
+					<tr>
+						<th>商品名称</th>
+						<th>数量</th>
+						<th>单价</th>
+						<th>小计</th>
+						<th>操作</th>
+					</tr>
+					<!-- tr表示行，下面是表格的第二行，有5列，td主要放列中的具体内容 -->
+					<tr>
+						<td>Js项目实战</td>
+						<td>
+							<button type="button">-</button>
+							<span class="goods-num">0</span>
+							<button type="button">+</button>
+						</td>
+						<td>单价：<span class="goods-price">10</span>元</td>
+						<td>小计：<span class="goods-single-price">0</span>元</td>
+						<td>操作：<input type="button" value="删除" /></td>
+					</tr>
+				
+					<tr>
+						<td>数据库原理</td>
+						<td>
+							<button type="button">-</button>
+							<span class="goods-num">0</span>
+							<button type="button">+</button>
+						</td>
+						<td>单价：<span class="goods-price">20</span>元</td>
+						<td>小计：<span class="goods-single-price">0</span>元</td>
+						<td>操作：<input type="button" value="删除" /></td>
+					</tr>
+					
+					<tr>
+						<td colspan="5">
+							一共<span id="goods-total-nums">0</span>件商品，共计花费<span id="goods-total-price">0</span>元
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+	<!-- Js部分的动态效果使用ES6新语法实现 -->
+	<script type="text/javascript">
+		window.onload = function(){
+			/* 定义一个购物车类 */
+			class Cart{
+				/* 观察得知页面90%动态效果的触发都是button按钮引起的,
+				利用封装的思想,将页面数据动态改变的实现都在一个方法中进行 */
+				
+				//定义一个事件绑定函数,调用该函数为button,input按钮绑定事件
+				eventBind(){
+					//数量加减按钮的事件绑定
+					let oBtn = document.getElementsByTagName('button');
+					let that = this;//重定义this指向,使this指向当前Cart类
+					for(let i=0;i<oBtn.length;i++){
+						if(i%2 == 0){
+							oBtn[i].onclick = function(){
+								//调用商品数量减少函数
+								that.goodsMin(this);//里面的参数this指向当前触发click事件的对象
+							}
+						}else{
+							oBtn[i].onclick = function(){
+								//调用商品数量增加函数
+								that.goodsAdd(this);
+							}
+						}
+						
+					}
+					
+					//input删除按钮的事件绑定
+					let oBtnDel = document.getElementsByTagName('input');
+					for(let i=0;i<oBtnDel.length;i++){
+						oBtnDel[i].onclick = function(){
+							//调用商品移出函数
+							that.remove(this);
+						}
+					}
+				}
+				
+				
+				
+				
+				//定义商品数量减少函数(命令式编程)
+				goodsMin(btn){
+					//先获取要改变的节点
+					let oGoodsNum = btn.nextElementSibling;
+					if(oGoodsNum.innerHTML > 0){
+						oGoodsNum.innerHTML = oGoodsNum.innerHTML - 1;
+					//数量减少的同时商品的小计及总价格也在减少(他们的计算有离不开商品单价)
+					let oGoodsPrice = btn.parentNode.nextElementSibling.firstElementChild;//获取商品单价
+					let oGoodsSinglePrice = btn.parentNode.nextElementSibling.nextElementSibling.firstElementChild;
+					oGoodsSinglePrice.innerHTML = this.getGoodsSinglePrice(oGoodsNum.innerHTML,oGoodsPrice.innerHTML);
+					//更新商品总数量及总价格
+					this.getGoodsNumAndUpdate();
+					this.getGoodsPriceAndUpdate();
+					}
+				}
+				
+				//定义商品数量增加函数(命令式编程)
+				goodsAdd(btn){
+					let oGoodsNum = btn.previousElementSibling;
+					oGoodsNum.innerHTML = Number(oGoodsNum.innerHTML) + 1;
+					let oGoodsPrice = btn.parentNode.nextElementSibling.firstElementChild;
+					let oGoodsSinglePrice = btn.parentNode.nextElementSibling.nextElementSibling.firstElementChild;
+					oGoodsSinglePrice.innerHTML = this.getGoodsSinglePrice(oGoodsNum.innerHTML,oGoodsPrice.innerHTML);
+					this.getGoodsNumAndUpdate();
+					this.getGoodsPriceAndUpdate();
+				}
+				
+				//定义商品移出函数(命令式编程)
+				remove(btn){
+					let oTr = btn.parentNode.parentNode;
+					oTr.remove();
+					this.getGoodsNumAndUpdate();
+					this.getGoodsPriceAndUpdate();
+				}
+				
+				//与计算相关的函数都在这
+					//得到商品小计价格
+					getGoodsSinglePrice(num,price){
+						return num*price;
+					}
+					
+					
+				//商品总数量与总价格的更新函数都在这
+					//商品总数量更新函数
+					getGoodsNumAndUpdate(){
+						let oGoodsNum = document.getElementsByClassName('goods-num');
+						let goodsTatalNums = 0;
+						for(let i=0;i<oGoodsNum.length;i++){
+							goodsTatalNums+=Number(oGoodsNum[i].innerHTML);//使用Number函数将字符串转数字
+						}
+						let oGoodsTotalNums = document.getElementById('goods-total-nums');
+						oGoodsTotalNums.innerHTML = goodsTatalNums;
+					}
+					//商品总价格更新函数
+					getGoodsPriceAndUpdate(){
+						let oGoodsSinglePrice = document.getElementsByClassName('goods-single-price');
+						let goodsTotalPrice = 0;
+						for(let i=0;i<oGoodsSinglePrice.length;i++){
+							goodsTotalPrice+=Number(oGoodsSinglePrice[i].innerHTML);
+						}
+						let oGoodsTotalPrice = document.getElementById('goods-total-price');
+						oGoodsTotalPrice.innerHTML = goodsTotalPrice;
+					}
+			}
+			
+			let c = new Cart();
+			c.eventBind();
+		}
+	</script>
+</html>
