@@ -1,0 +1,65 @@
+<!-- 需求说明：实现类似qq那样的图像下显示消息条数小图标，常用于一些消息提醒功能 -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css"/>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				background-color: rgb(244,246,249);
+			}
+			li{
+				list-style: none;
+			}
+			.user{
+				width: 75px;
+				height: 75px;
+				margin: 8px auto;
+				border: 1px solid #1e9bf5;
+				border-radius: 50%;
+				cursor: pointer;
+				background-image: url(http://www.jq22.com/img/cs/500x500-3.png);
+				background-size: 100% auto;
+				position: relative;
+			}
+			.user-list{
+				overflow: hidden;
+				position: absolute;
+				top: 82px;
+				width: 130px;
+				height: 0px;
+				border: 1px solid #f5f6f7;
+			}
+			/* 通过移入user控制user-list的样式 */
+			.user:hover .user-list{
+				height: 190px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="user">
+			<div class="user-list">
+				<ul>
+					<li><a href="##"><i></i>个人中心</a></li>
+					<li><a href="##"><i></i>账号设置</a></li>
+					<li>
+						<a href="##"><i></i>我的消息</a>
+						<div>8</div>
+					</li>
+					<li><a href="##"><i></i>我的评价</a></li>
+					<li>
+						<a href="##"><i></i>系统通知</a>
+						<div>5</div>
+					</li>
+					<li><a href="##"><i></i>退出登录</a></li>
+				</ul>
+			</div>
+			<div class="number">13</div>
+		</div>
+	</body>
+</html>
